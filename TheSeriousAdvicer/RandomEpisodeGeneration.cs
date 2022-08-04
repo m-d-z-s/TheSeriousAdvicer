@@ -12,20 +12,33 @@ namespace TheSeriousAdvicer
             seriesListFilePath = rootPath + seriesListFileName;
         }
 
+        public readonly string rootPath;
+        public readonly string seriesListFilePath;
+
         public string RandomEpisodeGenerator(int seriesNumber)
         {
+            string output;
             var watchedEpisodes = GetWatchedEpisodes();
 
             var seriesList = GetSeriesList(); // get list of availible series
             var chosenSeries = seriesList[seriesNumber]; // pick a series chosen by user
             chosenSeries.Seasons = GetSeasonList(rootPath + chosenSeries.PathToSeasonsList, chosenSeries); // fill series with its seasons
-            var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
-            randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason, watchedEpisodes); // fill season with its episodes
-            var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
-            
-            WriteWatched(randomEpisode);
-                
-            return $"Let's watch {randomEpisode.series.Name}: {randomEpisode.season.Number} - {randomEpisode.number}.";
+            chosenSeries.Seasons.ForEach(season => season.Episodes = GetEpisodesList(rootPath + season.PathToEpisodesList, chosenSeries, season, watchedEpisodes));
+            chosenSeries.GetNotEmptySeasons();
+
+            //if (chosenSeries.Seasons.Count == 0) output = "You have watched this series completely!";
+            //else
+            //{
+                var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
+                randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason, watchedEpisodes); // fill season with its episodes
+                var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
+
+                WriteWatched(randomEpisode);
+
+                output = $"Let's watch {randomEpisode.series.Name}: {randomEpisode.season.Number} - {randomEpisode.number}.";
+            //}
+
+            return output;
         }
 
         public void WatchedEpisodesCleaning()
@@ -34,9 +47,6 @@ namespace TheSeriousAdvicer
             streamWriter.Write("");
             streamWriter.Close();
         }
-
-        private readonly string rootPath;
-        private readonly string seriesListFilePath;
         
         private void WriteWatched(Series.Episode episode)
         {
