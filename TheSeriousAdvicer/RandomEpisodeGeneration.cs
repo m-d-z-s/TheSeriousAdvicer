@@ -26,7 +26,7 @@ namespace TheSeriousAdvicer
                 var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
                 randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason); // fill season with its episodes
                 var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
-                if (CheckForWatched(chosenSeries, randomSeason, randomEpisode, watchedEpisodes))
+                if (!IsWatched(randomEpisode, watchedEpisodes))
                 {
                     var streamWriter = new StreamWriter(rootPath + @"\watched", true);
                     streamWriter.WriteLine($"{chosenSeries.Name}, {randomSeason.Number}, {randomEpisode.number}");
@@ -108,15 +108,9 @@ namespace TheSeriousAdvicer
             return episodesList;
         }
 
-        private bool CheckForWatched(Series series, Series.Season season, Series.Episode episode, List<string> watchedEpisodes)
+        private bool IsWatched(Series.Episode episode, List<string> watchedEpisodes)
         {
-            var coinsideces = 0;
-            watchedEpisodes.ForEach(it =>
-            {
-                if (it == $"{series.Name}, {season.Number}, {episode.number}") coinsideces++;
-            });
-            return coinsideces == 0 ? true : false;
-
+            return watchedEpisodes.Contains($"{episode.series.Name}, {episode.season.Number}, {episode.number}");
         }
     }
 }
