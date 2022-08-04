@@ -36,11 +36,14 @@ namespace TheSeriousAdvicer
                 comboBox1.Items.Add(textBox1.Text);
                 sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
                 sw.Close();
-                //string pathString = Path.Combine($"{textBox1.Text.ToLowerInvariant()}_episodes", @"seriesData\seasons\");
-                //Directory.CreateDirectory(pathString);
-                //StreamWriter streamWriter = new StreamWriter($@"seriesData\seasons\{textBox1.Text.ToLowerInvariant()}_episodes",true);
             }
             comboBox1.Refresh();
+            string pathString = Path.Combine($@"C:\Users\brusi\OneDrive\Рабочий стол\УНИВЕРСИТЕТ\TheSeriousAdvicer\TheSeriousAdvicer\TheSeriousAdvicer\bin\Debug\seriesData\seasons\{textBox1.Text}");
+            Directory.CreateDirectory(pathString);
+            var SerialName = textBox1.Text;
+            Hide();
+            DetailsOfTheSeries detailsOfTheSeries = new DetailsOfTheSeries(SerialName);
+            detailsOfTheSeries.Show();
         }
     }
 }

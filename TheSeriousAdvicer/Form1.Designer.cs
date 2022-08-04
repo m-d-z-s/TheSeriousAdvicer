@@ -79,7 +79,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.textBox1.Location = new System.Drawing.Point(313, 113);
+            this.textBox1.Location = new System.Drawing.Point(313, 110);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(419, 39);
             this.textBox1.TabIndex = 4;
@@ -88,7 +88,7 @@
             // 
             this.AddSerial.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AddSerial.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddSerial.Location = new System.Drawing.Point(471, 157);
+            this.AddSerial.Location = new System.Drawing.Point(471, 154);
             this.AddSerial.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddSerial.Name = "AddSerial";
             this.AddSerial.Size = new System.Drawing.Size(131, 54);
