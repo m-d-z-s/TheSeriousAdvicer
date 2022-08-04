@@ -4,6 +4,12 @@ namespace TheSeriousAdvicer
 {
     public partial class Series
     {
+        public Series(string name, string pathToSeasonsList)
+        {
+            Name = name;
+            PathToSeasonsList = pathToSeasonsList;
+        }
+
         public string Name { get; }
         public string PathToSeasonsList { get; }
         public List<Season> Seasons { get; set; }
@@ -11,12 +17,6 @@ namespace TheSeriousAdvicer
         public void GetNotEmptySeasons()
         {
             Seasons = Seasons.FindAll(season => !season.IsEmpty());
-        }
-
-        public Series(string name, string pathToSeasonsList)
-        {
-            Name = name;
-            PathToSeasonsList = pathToSeasonsList;
         }
     }
 }

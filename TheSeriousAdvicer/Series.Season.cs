@@ -6,6 +6,13 @@ namespace TheSeriousAdvicer
     {
         public class Season
         {
+            public Season(Series series, string number, string pathToEpisodesList)
+            {
+                this.series = series;
+                Number = number;
+                PathToEpisodesList = pathToEpisodesList;
+            }
+
             public Series series;
             public string Number { get; }
             public string PathToEpisodesList { get; }
@@ -15,13 +22,6 @@ namespace TheSeriousAdvicer
             public bool IsEmpty()
             {
                 return Episodes.Count == 0;
-            }
-
-            public Season(Series series, string number, string pathToEpisodesList)
-            {
-                this.series = series;
-                Number = number;
-                PathToEpisodesList = pathToEpisodesList;
             }
         }
     }
