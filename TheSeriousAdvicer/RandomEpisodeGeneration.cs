@@ -6,9 +6,9 @@ namespace TheSeriousAdvicer
 {
     internal class RandomEpisodeGeneration
     {
-        private readonly string rootPath;
+        internal readonly string rootPath;
         private readonly string seriesListFilePath;
-        private List<Series> GetSeriesList()
+        internal List<Series> GetSeriesList()
         {
             var streamReader = new StreamReader(seriesListFilePath, false);
             var seriesList = new List<Series>();
