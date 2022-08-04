@@ -4,10 +4,61 @@ using System.IO;
 
 namespace TheSeriousAdvicer
 {
-    internal class RandomEpisodeGeneration
+    public class RandomEpisodeGeneration
     {
+        public RandomEpisodeGeneration(string rootPath, string seriesListFileName)
+        {
+            this.rootPath = rootPath;
+            seriesListFilePath = rootPath + seriesListFileName;
+        }
+
+        public string RandomEpisodeGenerator(int seriesNumber)
+        {
+            var watchedEpisodes = GetWatchedEpisodes();
+
+            while (true)
+            {
+                if (watchedEpisodes.Count > 30) WatchedEpisodesCleaning();
+
+                var seriesList = GetSeriesList(); // get list of availible series
+                var chosenSeries = seriesList[seriesNumber]; // pick a series chosen by user
+                chosenSeries.Seasons = GetSeasonList(rootPath + chosenSeries.PathToSeasonsList, chosenSeries); // fill series with its seasons
+                var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
+                randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason); // fill season with its episodes
+                var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
+                if (CheckForWatched(chosenSeries, randomSeason, randomEpisode, watchedEpisodes))
+                {
+                    var streamWriter = new StreamWriter(rootPath + @"\watched", true);
+                    streamWriter.WriteLine($"{chosenSeries.Name}, {randomSeason.Number}, {randomEpisode.number}");
+                    streamWriter.Close();
+                    return $"Let's watch {chosenSeries.Name}: {randomSeason.Number} - {randomEpisode.number}.";
+                }
+            }
+        }
+
+        public void WatchedEpisodesCleaning()
+        {
+            var streamWriter = new StreamWriter(rootPath + @"\watched", false);
+            streamWriter.Write("");
+            streamWriter.Close();
+        }
+
         private readonly string rootPath;
         private readonly string seriesListFilePath;
+        
+        private List<string> GetWatchedEpisodes()
+        {
+            var streamReader = new StreamReader(rootPath + @"\watched", false);
+            var watchedEpisodes = new List<string>();
+            while (!streamReader.EndOfStream)
+            {
+                watchedEpisodes.Add(streamReader.ReadLine());
+            }
+            streamReader.Close();
+            
+            return watchedEpisodes;
+        }
+
         private List<Series> GetSeriesList()
         {
             var streamReader = new StreamReader(seriesListFilePath, false);
@@ -55,7 +106,6 @@ namespace TheSeriousAdvicer
             streamReader.Close();
 
             return episodesList;
-
         }
 
         private bool CheckForWatched(Series series, Series.Season season, Series.Episode episode, List<string> watchedEpisodes)
@@ -67,50 +117,6 @@ namespace TheSeriousAdvicer
             });
             return coinsideces == 0 ? true : false;
 
-        }
-
-        internal void WatchedEpisodesCleaning()
-        {
-            var streamWriter = new StreamWriter(rootPath + @"\watched", false);
-            streamWriter.Write("");
-            streamWriter.Close();
-        }
-
-        internal string RandomEpisodeGenerator(int seriesNumber)
-        {
-
-            while (true)
-            {
-                var streamReader = new StreamReader(rootPath + @"\watched", false);
-                var watchedEpisodes = new List<string>();
-                while (!streamReader.EndOfStream)
-                {
-                    watchedEpisodes.Add(streamReader.ReadLine());
-                }
-                streamReader.Close();
-
-                if (watchedEpisodes.Count > 30) WatchedEpisodesCleaning();
-
-                var seriesList = GetSeriesList(); // get list of availible series
-                var chosenSeries = seriesList[seriesNumber]; // pick a series chosen by user
-                chosenSeries.Seasons = GetSeasonList(rootPath + chosenSeries.PathToSeasonsList, chosenSeries); // fill series with its seasons
-                var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
-                randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason); // fill season with its episodes
-                var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
-                if (CheckForWatched(chosenSeries, randomSeason, randomEpisode, watchedEpisodes))
-                {
-                    var streamWriter = new StreamWriter(rootPath + @"\watched", true);
-                    streamWriter.WriteLine($"{chosenSeries.Name}, {randomSeason.Number}, {randomEpisode.number}");
-                    streamWriter.Close();
-                    return $"Let's watch {chosenSeries.Name}: {randomSeason.Number} - {randomEpisode.number}.";
-                }
-            }
-        }
-
-        internal RandomEpisodeGeneration(string rootPath, string seriesListFileName)
-        {
-            this.rootPath = rootPath;
-            seriesListFilePath = rootPath + seriesListFileName;
         }
     }
 }
