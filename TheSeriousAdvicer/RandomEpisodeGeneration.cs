@@ -17,20 +17,10 @@ namespace TheSeriousAdvicer
 
         public string RandomEpisodeGenerator(int seriesNumber)
         {
-            string output;
             var watchedEpisodes = GetWatchedEpisodes();
-
             var series = GetNotEmptySeries(seriesNumber, watchedEpisodes);
 
-            if (series.Seasons.Count == 0) output = "You have watched this series completely!";
-            else
-            {
-                var randomEpisode = GetRandomEpisode(series, watchedEpisodes);
-                WriteWatched(randomEpisode);
-                output = $"Let's watch {randomEpisode.series.Name}: {randomEpisode.season.Number} - {randomEpisode.number}.";
-            }
-
-            return output;
+            return BuildOutputString(series);
         }
 
         public void WatchedEpisodesCleaning()
@@ -38,6 +28,17 @@ namespace TheSeriousAdvicer
             var streamWriter = new StreamWriter(rootPath + @"\watched", false);
             streamWriter.Write("");
             streamWriter.Close();
+        }
+
+        private string BuildOutputString(Series series)
+        {
+            if (series.Seasons.Count == 0) return $"You have watched '{series.Name}' series completely!";
+            else
+            {
+                var randomEpisode = GetRandomEpisode(series);
+                WriteWatched(randomEpisode);
+                return $"Let's watch '{randomEpisode.series.Name}': {randomEpisode.season.Number} - {randomEpisode.number}.";
+            }
         }
         
         private Series GetNotEmptySeries(int seriesNumber, List<string> watchedEpisodes)
@@ -50,10 +51,9 @@ namespace TheSeriousAdvicer
             return series;
         }
 
-        private Series.Episode GetRandomEpisode(Series series, List<string> watchedEpisodes)
+        private Series.Episode GetRandomEpisode(Series series)
         {
-            var randomSeason = series.Seasons[new Random().Next(0, series.Seasons.Count)]; // pick random season of this series
-            randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, series, randomSeason, watchedEpisodes); // fill season with its episodes
+            var randomSeason = series.Seasons[new Random().Next(0, series.Seasons.Count)];
             return randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
         }
 
