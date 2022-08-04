@@ -25,16 +25,16 @@ namespace TheSeriousAdvicer
             return seriesList;
         }
 
-        private List<Season> GetSeasonList(string path)
+        private List<Series.Season> GetSeasonList(string path, Series series)
         {
             var streamReader = new StreamReader(path, false);
-            var seasonList = new List<Season>();
+            var seasonList = new List<Series.Season>();
             while (!streamReader.EndOfStream)
             {
                 var seasonData = streamReader.ReadLine().Split(',');
                 var seasonNumber = seasonData[0];
                 var seasonEpisodesListPath = seasonData[1];
-                var season = new Season(seasonNumber, seasonEpisodesListPath);
+                var season = new Series.Season(series, seasonNumber, seasonEpisodesListPath);
                 seasonList.Add(season);
             }
             streamReader.Close();
@@ -43,16 +43,13 @@ namespace TheSeriousAdvicer
 
         }
 
-        private List<Episode> GetEpisodesList(string path)
+        private List<Series.Episode> GetEpisodesList(string path, Series series, Series.Season season)
         {
             var streamReader = new StreamReader(path, false);
-            var episodesList = new List<Episode>();
+            var episodesList = new List<Series.Episode>();
             while (!streamReader.EndOfStream)
             {
-                var episode = new Episode
-                {
-                    Number = streamReader.ReadLine()
-                };
+                var episode = new Series.Episode(streamReader.ReadLine(), series, season);
                 episodesList.Add(episode);
             }
             streamReader.Close();
@@ -61,12 +58,12 @@ namespace TheSeriousAdvicer
 
         }
 
-        private bool CheckForWatched(Series series, Season season, Episode episode, List<string> watchedEpisodes)
+        private bool CheckForWatched(Series series, Series.Season season, Series.Episode episode, List<string> watchedEpisodes)
         {
             var coinsideces = 0;
             watchedEpisodes.ForEach(it =>
             {
-                if (it == $"{series.Name}, {season.Number}, {episode.Number}") coinsideces++;
+                if (it == $"{series.Name}, {season.Number}, {episode.number}") coinsideces++;
             });
             return coinsideces == 0 ? true : false;
 
@@ -96,16 +93,16 @@ namespace TheSeriousAdvicer
 
                 var seriesList = GetSeriesList(); // get list of availible series
                 var chosenSeries = seriesList[seriesNumber]; // pick a series chosen by user
-                chosenSeries.Seasons = GetSeasonList(rootPath + chosenSeries.PathToSeasonsList); // fill series with its seasons
+                chosenSeries.Seasons = GetSeasonList(rootPath + chosenSeries.PathToSeasonsList, chosenSeries); // fill series with its seasons
                 var randomSeason = chosenSeries.Seasons[new Random().Next(0, chosenSeries.Seasons.Count)]; // pick random season of this series
-                randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList); // fill season with its episodes
+                randomSeason.Episodes = GetEpisodesList(rootPath + randomSeason.PathToEpisodesList, chosenSeries, randomSeason); // fill season with its episodes
                 var randomEpisode = randomSeason.Episodes[new Random().Next(0, randomSeason.Episodes.Count)];
                 if (CheckForWatched(chosenSeries, randomSeason, randomEpisode, watchedEpisodes))
                 {
                     var streamWriter = new StreamWriter(rootPath + @"\watched", true);
-                    streamWriter.WriteLine($"{chosenSeries.Name}, {randomSeason.Number}, {randomEpisode.Number}");
+                    streamWriter.WriteLine($"{chosenSeries.Name}, {randomSeason.Number}, {randomEpisode.number}");
                     streamWriter.Close();
-                    return $"Let's watch {chosenSeries.Name}: {randomSeason.Number} - {randomEpisode.Number}.";
+                    return $"Let's watch {chosenSeries.Name}: {randomSeason.Number} - {randomEpisode.number}.";
                 }
             }
         }

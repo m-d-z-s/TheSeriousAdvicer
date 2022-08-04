@@ -59,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomEpisodeGeneration.cs" />
     <Compile Include="Series.cs" />
-    <Compile Include="Episode.cs" />
+    <Compile Include="Series.Episode.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -73,6 +73,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="bin\Debug\seriesData\watched" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -82,7 +83,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Season.cs" />
+    <Compile Include="Series.Season.cs" />
     <None Include="bin\Debug\seriesData\seasons\bigbangtheory_seasons" />
     <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season10episodes" />
     <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season11episodes" />
