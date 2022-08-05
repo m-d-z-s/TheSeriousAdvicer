@@ -59,5 +59,10 @@ namespace TheSeriousAdvicer
             seriesList.ForEach(line => comboBox1.Items.Add(line));
             streamReader.Close();
         }
+
+        private void textBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            textBox1.Text = "";
+        }
     }
 }
