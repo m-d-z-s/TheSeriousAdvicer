@@ -2,16 +2,21 @@
 
 namespace TheSeriousAdvicer
 {
-    public class Series
+    public partial class Series
     {
+        public Series(string name, string pathToSeasonsList)
+        {
+            Name = name;
+            PathToSeasonsList = pathToSeasonsList;
+        }
+
         public string Name { get; }
         public string PathToSeasonsList { get; }
         public List<Season> Seasons { get; set; }
 
-        public Series(string name, string pathToSeasonsList)
+        public void GetNotEmptySeasons()
         {
-            Name = name;
-            PathToSeasonsList = pathToSeasonsList; 
+            Seasons = Seasons.FindAll(season => !season.IsEmpty());
         }
     }
 }
