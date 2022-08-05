@@ -30,7 +30,9 @@
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.Ran = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.AddSerial = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -40,7 +42,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "The Big Bang Theory",
             "The Good Place"});
-            this.comboBox1.Location = new System.Drawing.Point(302, 139);
+            this.comboBox1.Location = new System.Drawing.Point(313, 327);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(419, 40);
@@ -52,7 +54,7 @@
             // 
             this.Ran.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Ran.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Ran.Location = new System.Drawing.Point(439, 202);
+            this.Ran.Location = new System.Drawing.Point(471, 389);
             this.Ran.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Ran.Name = "Ran";
             this.Ran.Size = new System.Drawing.Size(131, 54);
@@ -63,20 +65,38 @@
             this.Ran.Visible = false;
             this.Ran.Click += new System.EventHandler(this.Ran_Click);
             // 
-            // button1
+            // label1
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(460, 287);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 46);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Clear";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label1.Image = global::TheSeriousAdvicer.Properties.Resources.HSlNJy1;
+            this.label1.Location = new System.Drawing.Point(426, 54);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(187, 32);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Add new serial";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.textBox1.Location = new System.Drawing.Point(313, 110);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(419, 39);
+            this.textBox1.TabIndex = 4;
+            // 
+            // AddSerial
+            // 
+            this.AddSerial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AddSerial.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddSerial.Location = new System.Drawing.Point(471, 154);
+            this.AddSerial.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AddSerial.Name = "AddSerial";
+            this.AddSerial.Size = new System.Drawing.Size(131, 54);
+            this.AddSerial.TabIndex = 5;
+            this.AddSerial.Text = "Add";
+            this.AddSerial.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.AddSerial.UseVisualStyleBackColor = true;
+            this.AddSerial.Click += new System.EventHandler(this.AddSerial_Click);
             // 
             // Form1
             // 
@@ -86,13 +106,16 @@
             this.BackgroundImage = global::TheSeriousAdvicer.Properties.Resources.HSlNJy1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(975, 537);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.AddSerial);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.Ran);
             this.Controls.Add(this.comboBox1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,7 +123,9 @@
 
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button Ran;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button AddSerial;
     }
 }
 
