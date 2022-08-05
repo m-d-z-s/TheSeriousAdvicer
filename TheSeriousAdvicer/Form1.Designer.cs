@@ -37,15 +37,12 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "The Big Bang Theory",
-            "The Good Place"});
             this.comboBox1.Location = new System.Drawing.Point(313, 327);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(419, 40);
+            this.comboBox1.Size = new System.Drawing.Size(419, 37);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.Text = "Choose the serial";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
@@ -53,7 +50,7 @@
             // Ran
             // 
             this.Ran.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Ran.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Ran.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Ran.Location = new System.Drawing.Point(471, 389);
             this.Ran.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Ran.Name = "Ran";
@@ -68,26 +65,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.label1.Image = global::TheSeriousAdvicer.Properties.Resources.HSlNJy1;
             this.label1.Location = new System.Drawing.Point(426, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(187, 32);
+            this.label1.Size = new System.Drawing.Size(186, 29);
             this.label1.TabIndex = 3;
             this.label1.Text = "Add new serial";
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.textBox1.Location = new System.Drawing.Point(313, 110);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(419, 39);
+            this.textBox1.Size = new System.Drawing.Size(419, 34);
             this.textBox1.TabIndex = 4;
             // 
             // AddSerial
             // 
             this.AddSerial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AddSerial.Font = new System.Drawing.Font("Noto Sans Lisu", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AddSerial.Location = new System.Drawing.Point(471, 154);
             this.AddSerial.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddSerial.Name = "AddSerial";

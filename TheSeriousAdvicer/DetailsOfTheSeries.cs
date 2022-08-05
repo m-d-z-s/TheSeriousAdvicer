@@ -57,6 +57,12 @@ namespace TheSeriousAdvicer
             }
             if (key > numericUpDown1.Value)
             {
+                var streamWriter = new StreamWriter($@"seriesData\seasons\{newSerialName.ToLowerInvariant()}_seasons", true);
+                for (var i = 0; i < numericUpDown1.Value; i++)
+                {
+                    streamWriter.WriteLine($@"Season {i+1},\seasons\{newSerialName.ToLowerInvariant()}_episodes\season{i+1}episodes");
+                }
+                streamWriter.Close();
                 Hide();
                 form1.Show();
             }
