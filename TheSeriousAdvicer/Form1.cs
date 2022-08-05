@@ -38,7 +38,7 @@ namespace TheSeriousAdvicer
                 sw.Close();
             }
             comboBox1.Refresh();
-            string pathString = Path.Combine($@"C:\Users\brusi\OneDrive\Рабочий стол\УНИВЕРСИТЕТ\TheSeriousAdvicer\TheSeriousAdvicer\TheSeriousAdvicer\bin\Debug\seriesData\seasons\{textBox1.Text}");
+            string pathString = Path.Combine($@"C:\Users\brusi\OneDrive\Рабочий стол\УНИВЕРСИТЕТ\TheSeriousAdvicer\TheSeriousAdvicer\TheSeriousAdvicer\bin\Debug\seriesData\seasons\{textBox1.Text.ToLowerInvariant()}_episodes");
             Directory.CreateDirectory(pathString);
             var SerialName = textBox1.Text;
             Hide();

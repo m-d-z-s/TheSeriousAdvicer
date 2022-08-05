@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetailsOfTheSeries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailsOfTheSeries.Designer.cs">
+      <DependentUpon>DetailsOfTheSeries.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     <Compile Include="RandomEpisodeGeneration.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Episode.cs" />
+    <EmbeddedResource Include="DetailsOfTheSeries.resx">
+      <DependentUpon>DetailsOfTheSeries.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
