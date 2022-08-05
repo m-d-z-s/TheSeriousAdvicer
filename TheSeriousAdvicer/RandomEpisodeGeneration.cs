@@ -13,7 +13,7 @@ namespace TheSeriousAdvicer
         }
 
         public readonly string rootPath;
-        public readonly string seriesListFilePath;
+        private readonly string seriesListFilePath;
 
         public string RandomEpisodeGenerator(int seriesNumber)
         {
