@@ -93,24 +93,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Series.Season.cs" />
-    <None Include="bin\Debug\seriesData\seasons\bigbangtheory_seasons" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season10episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season11episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season12episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season1episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season2episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season3episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season4episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season5episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season6episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season7episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season8episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thebigbangtheory_episodes\season9episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thegoodplace_episodes\season1episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thegoodplace_episodes\season2episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thegoodplace_episodes\season3episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thegoodplace_episodes\season4episodes" />
-    <None Include="bin\Debug\seriesData\seasons\thegoodplace_seasons" />
     <None Include="bin\Debug\seriesData\seriesList" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\HSlNJy1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\seriesData\seasons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
