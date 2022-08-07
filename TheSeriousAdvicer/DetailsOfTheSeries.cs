@@ -7,7 +7,6 @@ namespace TheSeriousAdvicer
     {
         int key = 1;
         string newSerialName;
-        //string NameSerial;
         Form1 form1 = new Form1();
         
         public DetailsOfTheSeries()
@@ -31,7 +30,6 @@ namespace TheSeriousAdvicer
 
         private void button2_Click(object sender, System.EventArgs e)
         {
-            //label2.Text = " ";
             if (key == 1)
             {
                 StreamWriter streamWriter = new StreamWriter($@"seriesData\seasons\{newSerialName.ToLowerInvariant()}_episodes\season{key}episodes", true);
@@ -66,6 +64,12 @@ namespace TheSeriousAdvicer
                 Hide();
                 form1.Show();
             }
+            StreamWriter streamWriter1 = new StreamWriter($@"seriesData\{newSerialName.ToLowerInvariant()}_watched", true);
+            streamWriter1.Close();
+            //создать папку с просмотренными, в нем будут храниться файлы от каждого сериала
+            //изменить путь StreamWriter, при записи просмотренных
+            //какие нужны файла по дефолту?
+            //упростить код
         }
     }
 }

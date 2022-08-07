@@ -7,7 +7,7 @@ namespace TheSeriousAdvicer
 {
     public partial class Form1 : Form
     {
-        RandomEpisodeGeneration random = new RandomEpisodeGeneration("seriesData", @"\seriesList");
+        internal RandomEpisodeGeneration random = new RandomEpisodeGeneration("seriesData", @"\seriesList");
 
         public Form1()
         {
@@ -25,25 +25,68 @@ namespace TheSeriousAdvicer
 
         private void Ran_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Convert.ToString(random.RandomEpisodeGenerator(Convert.ToInt32(comboBox1.SelectedIndex))));
+            //StreamReader streamReader = new StreamReader(random.seriesListFilePath, true);
+            if (random.seriesListFilePath.Length != 0)
+            {
+                MessageBox.Show(Convert.ToString(random.RandomEpisodeGenerator(Convert.ToInt32(comboBox1.SelectedIndex))));
+            }
+            else
+            {
+                MessageBox.Show("Add series");
+            }
         }
 
         private void AddSerial_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "")
+            bool flag = false;
+            string[] strok = File.ReadAllLines(random.seriesListFilePath);
+            if(textBox1.Text != "" && strok.Length == 0)
             {
+                //MessageBox.Show("empty");
+                flag = true;
                 var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons");
                 StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
                 comboBox1.Items.Add(textBox1.Text);
                 sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
                 sw.Close();
             }
-            string pathString = Path.Combine($@"seriesData\seasons\{textBox1.Text.ToLowerInvariant()}_episodes");
-            Directory.CreateDirectory(pathString);
-            var SerialName = textBox1.Text;
-            Hide();
-            DetailsOfTheSeries detailsOfTheSeries = new DetailsOfTheSeries(SerialName);
-            detailsOfTheSeries.Show();
+            else if(textBox1.Text != "" && strok.Length != 0)
+            {
+                //MessageBox.Show("NOT");
+                StreamReader streamReader = new StreamReader(random.seriesListFilePath, false);
+                while (!streamReader.EndOfStream)
+                {
+                    var line = streamReader.ReadLine().Split(',');
+                    if (textBox1.Text == line[0])
+                    {
+                        MessageBox.Show("This series already exists");
+                    }
+                    else
+                    {
+                        flag |= true;
+                        var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons");
+                        StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
+                        comboBox1.Items.Add(textBox1.Text);
+                        sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
+                        sw.Close();
+                    }
+                }
+                streamReader.Close();
+            }
+            else
+            {
+                MessageBox.Show("Empty");
+            }
+            if (flag)
+            {
+                string pathString = Path.Combine($@"seriesData\seasons\{textBox1.Text.ToLowerInvariant()}_episodes");
+                Directory.CreateDirectory(pathString);
+                var SerialName = textBox1.Text;
+                Hide();
+                DetailsOfTheSeries detailsOfTheSeries = new DetailsOfTheSeries(SerialName);
+                detailsOfTheSeries.Show();
+            }
+
         }
 
         private void RefreshComboBox()
@@ -63,6 +106,7 @@ namespace TheSeriousAdvicer
         private void textBox1_MouseDown(object sender, MouseEventArgs e)
         {
             textBox1.Text = "";
+            AddSerial.Visible = true;
         }
     }
 }
