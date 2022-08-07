@@ -10,11 +10,6 @@ namespace TheSeriousAdvicer
             PathToSeasonsList = pathToSeasonsList;
             PathToWatchedList = pathToWatchedList;
         }
-        public Series(string name, string pathToSeasonsList)
-        {
-            Name = name;
-            PathToSeasonsList = pathToSeasonsList;
-        }
 
         public string Name { get; }
         public string PathToSeasonsList { get; }

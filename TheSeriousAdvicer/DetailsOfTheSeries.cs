@@ -64,12 +64,8 @@ namespace TheSeriousAdvicer
                 Hide();
                 form1.Show();
             }
-            StreamWriter streamWriter1 = new StreamWriter($@"seriesData\{newSerialName.ToLowerInvariant()}_watched", true);
-            streamWriter1.Close();
-            //создать папку с просмотренными, в нем будут храниться файлы от каждого сериала
-            //изменить путь StreamWriter, при записи просмотренных
-            //какие нужны файла по дефолту?
-            //упростить код
+            if (!Directory.Exists(Form1.watchedListsPath)) Directory.CreateDirectory(Form1.watchedListsPath);
+            var sw = new StreamWriter(Form1.watchedListsPath + @"\{newSerialName.ToLowerInvariant()}_watched"); sw.Close();
         }
     }
 }

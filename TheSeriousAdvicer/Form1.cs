@@ -8,10 +8,12 @@ namespace TheSeriousAdvicer
     public partial class Form1 : Form
     {
         internal RandomEpisodeGeneration random = new RandomEpisodeGeneration("seriesData", @"\seriesList");
+        public const string watchedListsPath = @"seriesData\watchedEpisodes";
 
         public Form1()
         {
             InitializeComponent();
+            InitializeFileStructure(1);
             RefreshComboBox();
         }
 
@@ -37,12 +39,13 @@ namespace TheSeriousAdvicer
 
         private void AddSerial_Click(object sender, EventArgs e)
         {
+            InitializeFileStructure(2);
             bool flag = false;
             string[] strok = File.ReadAllLines(random.seriesListFilePath);
             if(textBox1.Text != "" && strok.Length == 0)
             {
                 flag = true;
-                var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", random.rootPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
+                var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", watchedListsPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
                 StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
                 sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
                 sw.Close();
@@ -53,7 +56,7 @@ namespace TheSeriousAdvicer
                 else
                 {
                     flag = true;
-                    var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", random.rootPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
+                    var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", watchedListsPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
                     StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
                     comboBox1.Items.Add(textBox1.Text);
                     sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
@@ -76,6 +79,19 @@ namespace TheSeriousAdvicer
 
         }
 
+        private void InitializeFileStructure(int mode)
+        {
+            switch (mode)
+            {
+                case 1:
+                    if (!Directory.Exists(random.rootPath)) Directory.CreateDirectory(random.rootPath);
+                    if (!File.Exists(random.seriesListFilePath)) { var sw = new StreamWriter(random.seriesListFilePath); sw.Close(); }
+                    break;
+                case 2:
+                    if (!Directory.Exists(random.rootPath + @"\series")) Directory.CreateDirectory(random.rootPath + @"\series");
+                    break;
+            }
+        }
         private bool AlreadyExists()
         {
             var seriesNamesList = new List<string>();

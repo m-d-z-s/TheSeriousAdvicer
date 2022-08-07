@@ -86,7 +86,7 @@ namespace TheSeriousAdvicer
                 var seriesData = streamReader.ReadLine().Split(',');
                 var seriesName = seriesData[0];
                 var seriesSeasonsListPath = seriesData[1];
-                var series = new Series(seriesName, seriesSeasonsListPath, rootPath + $@"\{seriesName.ToLowerInvariant()}_watched");
+                var series = new Series(seriesName, seriesSeasonsListPath, Form1.watchedListsPath + $@"\{seriesName.ToLowerInvariant()}_watched");
                 seriesList.Add(series);
             }
             streamReader.Close();
