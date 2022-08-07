@@ -17,30 +17,20 @@ namespace TheSeriousAdvicer
 
         public string RandomEpisodeGenerator(int seriesNumber)
         {
-            //var watchedEpisodes = GetWatchedEpisodes();
             var series = GetNotEmptySeries(seriesNumber);
-
-            return BuildOutputString(series);
+            
+            if (series.Seasons.Count == 0) throw new Exception("Series overwatching!");/* $"You have watched '{series.Name}' series completely!";*/
+            
+            var randomEpisode = GetRandomEpisode(series);
+            WriteWatched(randomEpisode);
+            return $"Let's watch '{randomEpisode.series.Name}': {randomEpisode.season.Number} - {randomEpisode.number}.";
         }
 
-        public void WatchedEpisodesCleaning()
+/*        private string BuildOutputString(Series series)
         {
-            var streamWriter = new StreamWriter(rootPath + @"\watched", false);
-            streamWriter.Write("");
-            streamWriter.Close();
+            
         }
-
-        private string BuildOutputString(Series series)
-        {
-            if (series.Seasons.Count == 0) return $"You have watched '{series.Name}' series completely!";
-            else
-            {
-                var randomEpisode = GetRandomEpisode(series);
-                WriteWatched(randomEpisode);
-                return $"Let's watch '{randomEpisode.series.Name}': {randomEpisode.season.Number} - {randomEpisode.number}.";
-            }
-        }
-        
+*/        
         private Series GetNotEmptySeries(int seriesNumber)
         {
             var seriesList = GetSeriesList();
@@ -86,7 +76,7 @@ namespace TheSeriousAdvicer
                 var seriesData = streamReader.ReadLine().Split(',');
                 var seriesName = seriesData[0];
                 var seriesSeasonsListPath = seriesData[1];
-                var series = new Series(seriesName, seriesSeasonsListPath, Form1.watchedListsPath + $@"\{seriesName.ToLowerInvariant()}_watched");
+                var series = new Series(seriesName, seriesSeasonsListPath, Form1.watchedListsPath + $@"\{Utility.NameFormater(seriesName)}_watched");
                 seriesList.Add(series);
             }
             streamReader.Close();

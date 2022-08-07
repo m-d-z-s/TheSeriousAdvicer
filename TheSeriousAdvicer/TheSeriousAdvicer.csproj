@@ -66,6 +66,13 @@
     <Compile Include="RandomEpisodeGeneration.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="Series.Episode.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="WatchedListQuestionnaire.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WatchedListQuestionnaire.Designer.cs">
+      <DependentUpon>WatchedListQuestionnaire.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DetailsOfTheSeries.resx">
       <DependentUpon>DetailsOfTheSeries.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,7 +89,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="bin\Debug\seriesData\watched" />
+    <EmbeddedResource Include="WatchedListQuestionnaire.resx">
+      <DependentUpon>WatchedListQuestionnaire.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,7 +102,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Series.Season.cs" />
-    <None Include="bin\Debug\seriesData\seriesList" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -104,8 +112,6 @@
   <ItemGroup>
     <None Include="Resources\HSlNJy1.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\seriesData\seasons\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,15 +7,16 @@ namespace TheSeriousAdvicer
 {
     public partial class Form1 : Form
     {
-        internal RandomEpisodeGeneration random = new RandomEpisodeGeneration("seriesData", @"\seriesList");
-        public const string watchedListsPath = @"seriesData\watchedEpisodes";
-
         public Form1()
         {
             InitializeComponent();
-            InitializeFileStructure(1);
+            InitializeFileStructure();
             RefreshComboBox();
+            InitializeSeriesNamesList();
         }
+
+        private readonly RandomEpisodeGeneration random = new RandomEpisodeGeneration("seriesData", @"\seriesList");
+        public const string watchedListsPath = @"seriesData\watchedEpisodes";
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -25,11 +26,36 @@ namespace TheSeriousAdvicer
             }
         }
 
+        private void InitializeSeriesNamesList()
+        {
+            
+        }
+
         private void Ran_Click(object sender, EventArgs e)
         {
+            var seriesNamesList = new List<string>();
+            var streamReader = new StreamReader(random.seriesListFilePath);
+            while (!streamReader.EndOfStream)
+            {
+                var line = streamReader.ReadLine().Split(',');
+                seriesNamesList.Add(line[0]);
+            }
+            streamReader.Close();
+
             if (random.seriesListFilePath.Length != 0)
             {
-                MessageBox.Show(Convert.ToString(random.RandomEpisodeGenerator(Convert.ToInt32(comboBox1.SelectedIndex))));
+                var index = Convert.ToInt32(comboBox1.SelectedIndex);
+                try
+                {
+                    MessageBox.Show(Convert.ToString(random.RandomEpisodeGenerator(index)));
+                }
+                
+                catch (Exception)
+                {
+                    var questionnnaire = new WatchedListQuestionnaire(seriesNamesList[index], watchedListsPath + $@"\{Utility.NameFormater(seriesNamesList[index])}_watched");
+                    questionnnaire.Show();
+                    Hide();
+                }
             }
             else
             {
@@ -39,13 +65,14 @@ namespace TheSeriousAdvicer
 
         private void AddSerial_Click(object sender, EventArgs e)
         {
-            InitializeFileStructure(2);
+            var seriesName = Utility.NameFormater(textBox1.Text);
+
             bool flag = false;
             string[] strok = File.ReadAllLines(random.seriesListFilePath);
             if(textBox1.Text != "" && strok.Length == 0)
             {
                 flag = true;
-                var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", watchedListsPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
+                var series = new Series(textBox1.Text, $@"\seasons\{seriesName}_seasons", watchedListsPath + $@"\{seriesName}_watched");
                 StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
                 sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
                 sw.Close();
@@ -56,7 +83,7 @@ namespace TheSeriousAdvicer
                 else
                 {
                     flag = true;
-                    var series = new Series(textBox1.Text, $@"\seasons\{textBox1.Text.ToLowerInvariant()}_seasons", watchedListsPath + $@"\{textBox1.Text.ToLowerInvariant()}_watched");
+                    var series = new Series(textBox1.Text, $@"\seasons\{seriesName}_seasons", watchedListsPath + $@"\{seriesName}_watched");
                     StreamWriter sw = new StreamWriter(random.seriesListFilePath, true);
                     comboBox1.Items.Add(textBox1.Text);
                     sw.WriteLine(series.Name + "," + series.PathToSeasonsList);
@@ -69,29 +96,21 @@ namespace TheSeriousAdvicer
             }
             if (flag)
             {
-                string pathString = Path.Combine($@"seriesData\seasons\{textBox1.Text.ToLowerInvariant()}_episodes");
+                string pathString = Path.Combine($@"seriesData\seasons\{seriesName}_episodes");
                 Directory.CreateDirectory(pathString);
-                var SerialName = textBox1.Text;
                 Hide();
-                DetailsOfTheSeries detailsOfTheSeries = new DetailsOfTheSeries(SerialName);
+                DetailsOfTheSeries detailsOfTheSeries = new DetailsOfTheSeries(seriesName);
                 detailsOfTheSeries.Show();
             }
 
         }
 
-        private void InitializeFileStructure(int mode)
+        private void InitializeFileStructure()
         {
-            switch (mode)
-            {
-                case 1:
-                    if (!Directory.Exists(random.rootPath)) Directory.CreateDirectory(random.rootPath);
-                    if (!File.Exists(random.seriesListFilePath)) { var sw = new StreamWriter(random.seriesListFilePath); sw.Close(); }
-                    break;
-                case 2:
-                    if (!Directory.Exists(random.rootPath + @"\series")) Directory.CreateDirectory(random.rootPath + @"\series");
-                    break;
-            }
+            if (!Directory.Exists(random.rootPath)) Directory.CreateDirectory(random.rootPath);
+            if (!File.Exists(random.seriesListFilePath)) { var sw = new StreamWriter(random.seriesListFilePath); sw.Close(); }
         }
+        
         private bool AlreadyExists()
         {
             var seriesNamesList = new List<string>();
