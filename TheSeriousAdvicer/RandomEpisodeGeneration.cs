@@ -17,8 +17,8 @@ namespace TheSeriousAdvicer
 
         public string RandomEpisodeGenerator(int seriesNumber)
         {
-            var watchedEpisodes = GetWatchedEpisodes();
-            var series = GetNotEmptySeries(seriesNumber, watchedEpisodes);
+            //var watchedEpisodes = GetWatchedEpisodes();
+            var series = GetNotEmptySeries(seriesNumber);
 
             return BuildOutputString(series);
         }
@@ -41,12 +41,12 @@ namespace TheSeriousAdvicer
             }
         }
         
-        private Series GetNotEmptySeries(int seriesNumber, List<string> watchedEpisodes)
+        private Series GetNotEmptySeries(int seriesNumber)
         {
             var seriesList = GetSeriesList();
             var series = seriesList[seriesNumber];
             series.Seasons = GetSeasonList(rootPath + series.PathToSeasonsList, series);
-            series.Seasons.ForEach(season => season.Episodes = GetEpisodesList(rootPath + season.PathToEpisodesList, series, season, watchedEpisodes));
+            series.Seasons.ForEach(season => season.Episodes = GetEpisodesList(rootPath + season.PathToEpisodesList, series, season));
             series.GetNotEmptySeasons();
             return series;
         }
@@ -59,14 +59,14 @@ namespace TheSeriousAdvicer
 
         private void WriteWatched(Series.Episode episode)
         {
-            var streamWriter = new StreamWriter(rootPath + @"\watched", true);
+            var streamWriter = new StreamWriter(episode.series.PathToWatchedList, true);
             streamWriter.WriteLine($"{episode.series.Name}, {episode.season.Number}, {episode.number}");
             streamWriter.Close();
         }
-        
-        private List<string> GetWatchedEpisodes()
+
+        private List<string> GetWatchedEpisodes(Series.Episode episode)
         {
-            var streamReader = new StreamReader(rootPath + @"\watched", false);
+            var streamReader = new StreamReader(episode.series.PathToWatchedList, false);
             var watchedEpisodes = new List<string>();
             while (!streamReader.EndOfStream)
             {
@@ -86,7 +86,7 @@ namespace TheSeriousAdvicer
                 var seriesData = streamReader.ReadLine().Split(',');
                 var seriesName = seriesData[0];
                 var seriesSeasonsListPath = seriesData[1];
-                var series = new Series(seriesName, seriesSeasonsListPath);
+                var series = new Series(seriesName, seriesSeasonsListPath, rootPath + $@"\{seriesName.ToLowerInvariant()}_watched");
                 seriesList.Add(series);
             }
             streamReader.Close();
@@ -112,14 +112,14 @@ namespace TheSeriousAdvicer
 
         }
 
-        private List<Series.Episode> GetEpisodesList(string path, Series series, Series.Season season, List<string> watchedEpisodes)
+        private List<Series.Episode> GetEpisodesList(string path, Series series, Series.Season season/*, List<string> watchedEpisodes*/)
         {
             var streamReader = new StreamReader(path, false);
             var episodesList = new List<Series.Episode>();
             while (!streamReader.EndOfStream)
             {
                 var episode = new Series.Episode(streamReader.ReadLine(), series, season);
-                if (!IsWatched(episode, watchedEpisodes)) episodesList.Add(episode);
+                if (!IsWatched(episode, GetWatchedEpisodes(episode))) episodesList.Add(episode);
             }
             streamReader.Close();
 
@@ -128,7 +128,7 @@ namespace TheSeriousAdvicer
 
         private bool IsWatched(Series.Episode episode, List<string> watchedEpisodes)
         {
-            return watchedEpisodes.Contains($"{episode.series.Name}, {episode.season.Number}, {episode.number}");
+            return watchedEpisodes.Contains($"{ episode.series.Name}, {episode.season.Number}, {episode.number}");
         }
     }
 }
